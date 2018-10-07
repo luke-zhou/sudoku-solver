@@ -23,8 +23,8 @@ problem_easy = [
 ]
 
 
-def main():
-    sudoku = preprocessing(problem_easy)
+def main(problem):
+    sudoku = preprocessing(problem)
     updated = True
     while updated:
         updated = False
@@ -40,9 +40,6 @@ def main():
         print_sudoku(sudoku)
         print(updated)
         print()
-
-        if not updated:
-            break
 
         sudoku = get_square(sudoku)
         for i in range(9):
@@ -107,13 +104,15 @@ def evaluate(group):
                 nums.append(new_group[i])
             else:
                 for e in new_group[i]:
-                    num_dict[e] = num_dict[e]+1 if e in num_dict else 1
+                    # print(e, i)
+                    # print(num_dict.items())
+                    num_dict[e] = num_dict[e]+[i] if e in num_dict else [i]
         else:
             new_group[i] = group[i]
 
-    print(new_group)
+    # print(new_group)
 
-    certain_nums = [k for k in num_dict if num_dict[k]
+    certain_nums = [k for k in num_dict if len(num_dict[k])
                     == 1 and num_dict[k] not in nums]
 
     for i in range(9):
@@ -134,7 +133,7 @@ if __name__ == "__main__":
     # result = evaluate([3, 2, [1, 7], [5, 8], 5, 9, 6, 4, [1, 5, 7, 8]])
     # print_sudoku(result)
 
-    main()
+    main(problem_hard)
 
     # result = get_square(problem)
     # print_sudoku(result)

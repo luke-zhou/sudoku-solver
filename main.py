@@ -1,13 +1,13 @@
 problem = [
-    [6, 0, 0, 0, 1, 0, 8, 5, 0],
-    [2, 0, 0, 0, 8, 5, 4, 0, 0],
-    [8, 0, 5, 0, 0, 4, 1, 0, 0],
-    [0, 0, 0, 4, 0, 2, 5, 0, 3],
-    [0, 0, 2, 1, 3, 0, 0, 6, 0],
-    [4, 0, 6, 0, 9, 0, 2, 0, 0],
-    [3, 0, 0, 0, 0, 9, 6, 4, 0],
-    [0, 0, 8, 7, 0, 1, 0, 2, 0],
-    [5, 4, 0, 3, 2, 0, 0, 0, 0]
+    [0, 0, 0, 0, 1, 7, 5, 0, 0],
+    [0, 0, 0, 0, 0, 2, 0, 0, 0],
+    [7, 4, 8, 0, 0, 0, 2, 0, 0],
+    [8, 5, 4, 0, 2, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 4, 0, 1, 6, 0],
+    [5, 0, 0, 8, 0, 0, 0, 7, 0],
+    [0, 0, 0, 7, 0, 0, 0, 0, 9],
+    [0, 6, 0, 0, 0, 9, 0, 0, 8]
 ]
 
 
@@ -83,13 +83,16 @@ def evaluate(group):
             # only element make it certain
             if len(new_group[i])==1:
                 new_group[i]=new_group[i][0]
+                nums.append(new_group[i])
             else:
                 for e in new_group[i]:
                     num_dict[e] = num_dict[e]+1 if e in num_dict else 1
         else:
             new_group[i] = group[i]
 
-    certain_nums =[k for k in num_dict if num_dict[k]==1]
+    print(new_group)
+
+    certain_nums =[k for k in num_dict if num_dict[k]==1 and num_dict[k] not in nums]
 
     for i in range(9):
         if type(new_group[i]) is list:
@@ -104,7 +107,7 @@ def print_sudoku(sudoku):
         print(row)
 
 if __name__ == "__main__":
-    # result = evaluate([6, [1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9], 1, [1, 2, 3, 4, 5, 6, 7, 8, 9], 8, 5, [1, 2, 3, 4, 5, 6, 7, 8, 9]])
+    # result = evaluate([3, 2, [1, 7], [5, 8], 5, 9, 6, 4, [1, 5, 7, 8]])
     # print_sudoku(result)
 
     main()

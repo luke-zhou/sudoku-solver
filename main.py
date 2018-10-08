@@ -28,19 +28,31 @@ def main(problem):
     updated = True
     while updated:
         updated = False
-        for _ in range(2):
-            for i in range(9):
-                if need_evaluate(sudoku[i]):
-                    result, changed = evaluate(sudoku[i])
-                    sudoku[i] = result
-                    updated = updated or changed
-
-            sudoku = pivot(sudoku)
-
+        print("row")
+        for i in range(9):
+            if need_evaluate(sudoku[i]):
+                result, changed = evaluate(sudoku[i])
+                sudoku[i] = result
+                updated = updated or changed
         print_sudoku(sudoku)
         print(updated)
         print()
 
+
+        print("column")
+        sudoku = pivot(sudoku)
+        for i in range(9):
+            if need_evaluate(sudoku[i]):
+                result, changed = evaluate(sudoku[i])
+                sudoku[i] = result
+                updated = updated or changed
+        
+        sudoku = pivot(sudoku)
+        print_sudoku(sudoku)
+        print(updated)
+        print()
+
+        print("square")
         sudoku = get_square(sudoku)
         for i in range(9):
             if need_evaluate(sudoku[i]):
@@ -52,6 +64,7 @@ def main(problem):
 
         print_sudoku(sudoku)
         print(updated)
+        print()
 
 
 def get_square(sudoku):
@@ -92,6 +105,7 @@ def need_evaluate(group):
 
 
 def evaluate(group):
+    # print("group:{}".format(group))
     nums = [e for e in group if type(e) is int]
     num_dict = {}
     new_group = [0]*9
@@ -111,16 +125,18 @@ def evaluate(group):
             new_group[i] = group[i]
 
     # print(new_group)
+    # print(nums)
+    # print(num_dict)
 
     certain_nums = [k for k in num_dict if len(num_dict[k])
                     == 1 and num_dict[k] not in nums]
 
     for i in range(9):
         if type(new_group[i]) is list:
-            test_result = [num for num in group[i] if num in certain_nums]
+            test_result = [num for num in new_group[i] if num in certain_nums and num not in nums]
             new_group[i] = test_result[0] if len(
                 test_result) == 1 else new_group[i]
-
+    # print("new group:{}".format(new_group))
     return new_group, new_group != group
 
 
@@ -130,7 +146,7 @@ def print_sudoku(sudoku):
 
 
 if __name__ == "__main__":
-    # result = evaluate([3, 2, [1, 7], [5, 8], 5, 9, 6, 4, [1, 5, 7, 8]])
+    # result = evaluate([[2, 6], [1, 6, 7], [1, 7], 8, 9, [1, 4, 5, 7], 7, [1, 4, 5, 6], 3])
     # print_sudoku(result)
 
     main(problem_hard)

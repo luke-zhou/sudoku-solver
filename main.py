@@ -107,16 +107,16 @@ def need_evaluate(group):
 def evaluate(group):
     # print("group:{}".format(group))
     nums = [e for e in group if type(e) is int]
+    nums.extend([e[0] for e in group if type(e) is list and len(e)==1])
     num_dict = {}
     new_group = [0]*9
     for i in range(9):
         if type(group[i]) is list:
-            new_group[i] = [num for num in group[i] if num not in nums]
-            # only element make it certain
-            if len(new_group[i]) == 1:
-                new_group[i] = new_group[i][0]
-                nums.append(new_group[i])
+            if len(group[i])==1:
+                new_group[i] = group[i][0]
             else:
+                new_group[i] = [num for num in group[i] if num not in nums]
+                # only element make it certain
                 for e in new_group[i]:
                     # print(e, i)
                     # print(num_dict.items())
@@ -129,19 +129,21 @@ def evaluate(group):
     # print(num_dict)
 
     certain_nums = [k for k in num_dict if len(num_dict[k])
-                    == 1 and num_dict[k] not in nums]
+                    == 1 and k not in nums]
 
-    for i in range(9):
-        if type(new_group[i]) is list:
-            test_result = [num for num in new_group[i] if num in certain_nums and num not in nums]
-            new_group[i] = test_result[0] if len(
-                test_result) == 1 else new_group[i]
+    for x in [e for e in new_group if type(e) is list]:
+        test_result = [num for num in x if num in certain_nums]
+        x = test_result[0] if test_result else x
+
     # print("new group:{}".format(new_group))
     return new_group, new_group != group
 
 
 def print_sudoku(sudoku):
     for row in sudoku:
+        # for e in row:
+        #     print("{}\t".format(e),end='')
+        # print()
         print(row)
 
 

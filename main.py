@@ -133,7 +133,8 @@ def evaluate(group):
 
     for x in [e for e in new_group if type(e) is list]:
         test_result = [num for num in x if num in certain_nums]
-        x = test_result[0] if test_result else x
+        if test_result:
+            x = test_result[0]
 
     # print("new group:{}".format(new_group))
     return new_group, new_group != group

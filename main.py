@@ -131,7 +131,10 @@ def evaluate(group):
     # print(nums)
     # print(num_dict)
 
-    # for x in [e for e in new_group if len(e)==1]:
+    if new_group == group:
+        group_nums_count=2
+        e_indexes = [i for i in range(9) if len(group[i])<=group_nums_count]
+        print("e indexes: {}".format(e_indexes))
 
 
     certain_nums = [k for k in num_dict if len(num_dict[k])

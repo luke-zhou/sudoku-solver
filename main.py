@@ -133,8 +133,29 @@ def evaluate(group):
 
     if new_group == group:
         group_nums_count=2
-        e_indexes = [i for i in range(9) if len(group[i])<=group_nums_count]
-        print("e indexes: {}".format(e_indexes))
+        e_indexes = [i for i in range(9) if type(new_group[i]) is list and len(new_group[i])<=group_nums_count]
+        indexes_length = len(e_indexes)
+        if indexes_length >= group_nums_count:
+            for i in range(indexes_length):
+                for j in range(i+1, indexes_length):
+                    if len(set(new_group[e_indexes[i]] + new_group[e_indexes[j]]))==group_nums_count:
+                        print(new_group[e_indexes[i]], new_group[e_indexes[j]])
+    
+    if new_group == group:
+        group_nums_count=3
+        e_indexes = [i for i in range(9) if type(new_group[i]) is list and len(new_group[i])<=group_nums_count]
+        indexes_length = len(e_indexes)
+        if indexes_length >= group_nums_count:
+            for i in range(indexes_length):
+                for j in range(i+1, indexes_length):
+                    for k in range(j+1, indexes_length):
+                        if len(set(new_group[e_indexes[i]]+new_group[e_indexes[j]]+new_group[e_indexes[k]]))==group_nums_count:
+                            # print(new_group[e_indexes[i]], new_group[e_indexes[j]],new_group[e_indexes[k]])
+                            group_nums = set(new_group[e_indexes[i]]+new_group[e_indexes[j]]+new_group[e_indexes[k]])
+                            for l in range(9):
+                                if l not in [i,j,k] and type(group[l]) is list:
+                                    new_group[l] = [num for num in new_group[l] if num not in group_nums]
+
 
 
     certain_nums = [k for k in num_dict if len(num_dict[k])
@@ -159,6 +180,10 @@ if __name__ == "__main__":
     # print_sudoku(result)
 
     main(problem_hard)
+
+    # list1 = [1,2,3]
+    # list2 = [2,3,4]
+    # print(set(list1+list2))
 
     # result = get_square(problem)
     # print_sudoku(result)

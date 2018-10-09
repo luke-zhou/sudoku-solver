@@ -106,21 +106,24 @@ def need_evaluate(group):
 
 def evaluate(group):
     # print("group:{}".format(group))
+    
+    for i in range(9):
+        if type(group[i]) is list and len(group[i])==1:
+            group[i] = group[i][0]
+
+
     nums = [e for e in group if type(e) is int]
-    nums.extend([e[0] for e in group if type(e) is list and len(e)==1])
+    # nums.extend([e[0] for e in group if type(e) is list and len(e)==1])
     num_dict = {}
     new_group = [0]*9
     for i in range(9):
         if type(group[i]) is list:
-            if len(group[i])==1:
-                new_group[i] = group[i][0]
-            else:
-                new_group[i] = [num for num in group[i] if num not in nums]
-                # only element make it certain
-                for e in new_group[i]:
-                    # print(e, i)
-                    # print(num_dict.items())
-                    num_dict[e] = num_dict[e]+[i] if e in num_dict else [i]
+            new_group[i] = [num for num in group[i] if num not in nums]
+            # only element make it certain
+            for e in new_group[i]:
+                # print(e, i)
+                # print(num_dict.items())
+                num_dict[e] = num_dict[e]+[i] if e in num_dict else [i]
         else:
             new_group[i] = group[i]
 
@@ -128,13 +131,13 @@ def evaluate(group):
     # print(nums)
     # print(num_dict)
 
+    # for x in [e for e in new_group if len(e)==1]:
+
+
     certain_nums = [k for k in num_dict if len(num_dict[k])
                     == 1 and k not in nums]
-
-    for x in [e for e in new_group if type(e) is list]:
-        test_result = [num for num in x if num in certain_nums]
-        if test_result:
-            x = test_result[0]
+    for num in certain_nums:
+        new_group[num_dict[num][0]] = num
 
     # print("new group:{}".format(new_group))
     return new_group, new_group != group
@@ -149,7 +152,7 @@ def print_sudoku(sudoku):
 
 
 if __name__ == "__main__":
-    # result = evaluate([[2, 6], [1, 6, 7], [1, 7], 8, 9, [1, 4, 5, 7], 7, [1, 4, 5, 6], 3])
+    # result = evaluate([7, [1, 4], [1, 4, 5, 8], 3, [1, 4, 5, 8], 9, [4], [2, 4], 6])
     # print_sudoku(result)
 
     main(problem_hard)

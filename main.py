@@ -10,6 +10,18 @@ problem_hard = [
     [0, 6, 0, 0, 0, 9, 0, 0, 8]
 ]
 
+problem_hard_2 = [
+    [3, 0, 0, 0, 0, 0, 0, 8, 0],
+    [1, 0, 0, 6, 0, 3, 0, 0, 2],
+    [0, 6, 0, 0, 0, 0, 0, 0, 0],
+    [0, 8, 0, 1, 0, 0, 9, 7, 0],
+    [0, 0, 0, 5, 0, 0, 0, 0, 0],
+    [2, 0, 9, 0, 0, 4, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0, 6, 2, 0],
+    [0, 0, 0, 0, 0, 0, 0, 4, 3],
+    [0, 7, 0, 0, 5, 0, 1, 0, 0]
+]
+
 problem_easy = [
     [7, 0, 0, 3, 0, 9, 0, 0, 6],
     [0, 2, 6, 0, 0, 0, 0, 1, 8],
@@ -153,7 +165,7 @@ def evaluate(group):
                             # print(new_group[e_indexes[i]], new_group[e_indexes[j]],new_group[e_indexes[k]])
                             group_nums = set(new_group[e_indexes[i]]+new_group[e_indexes[j]]+new_group[e_indexes[k]])
                             for l in range(9):
-                                if l not in [i,j,k] and type(group[l]) is list:
+                                if l not in [e_indexes[i],e_indexes[j],e_indexes[k]] and type(new_group[l]) is list:
                                     new_group[l] = [num for num in new_group[l] if num not in group_nums]
 
 
@@ -176,10 +188,10 @@ def print_sudoku(sudoku):
 
 
 if __name__ == "__main__":
-    # result = evaluate([7, [1, 4], [1, 4, 5, 8], 3, [1, 4, 5, 8], 9, [4], [2, 4], 6])
+    # result = evaluate([8, 5, 4, [1, 3, 6, 9], 2, [1, 3, 6], [3, 7, 9], [3, 9], [3, 7]])
     # print_sudoku(result)
 
-    main(problem_hard)
+    main(problem_hard_2)
 
     # list1 = [1,2,3]
     # list2 = [2,3,4]
